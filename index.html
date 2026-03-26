@@ -7,31 +7,31 @@
   <meta name="description" content="유튜브 영상을 Notion에 빠르게 아카이빙" />
   <meta name="theme-color" content="#CC0000" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="YT Archive" />
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
       --red: #CC0000;
-      --red-bright: #FF0000;
-      --red-dark: #8B0000;
-      --red-glow: rgba(204, 0, 0, 0.35);
-      --bg: #0A0A0A;
-      --bg2: #111111;
-      --bg3: #1A1A1A;
-      --surface: #1E1E1E;
-      --surface2: #252525;
-      --border: rgba(255,255,255,0.07);
-      --border-red: rgba(204,0,0,0.4);
-      --text: #F0F0F0;
-      --text-muted: #888;
-      --text-dim: #555;
-      --success: #22C55E;
+      --red-bright: #E60000;
+      --red-dark: #990000;
+      --red-glow: rgba(204, 0, 0, 0.15);
+      --bg: #F5F5F5;
+      --bg2: #EBEBEB;
+      --bg3: #FFFFFF;
+      --surface: #FFFFFF;
+      --surface2: #F0F0F0;
+      --border: rgba(0,0,0,0.09);
+      --border-red: rgba(204,0,0,0.35);
+      --text: #111111;
+      --text-muted: #666666;
+      --text-dim: #AAAAAA;
+      --success: #16A34A;
       --radius: 10px;
     }
 
@@ -54,14 +54,16 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(10,10,10,0.92);
+      background: rgba(245,245,245,0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       padding: 0 16px;
-      height: 56px;
+      padding-top: env(safe-area-inset-top);
+      height: calc(56px + env(safe-area-inset-top));
       display: flex;
-      align-items: center;
+      align-items: flex-end;
+      padding-bottom: 10px;
       justify-content: space-between;
     }
 
@@ -72,28 +74,26 @@
     }
 
     .logo-icon {
-      width: 32px;
-      height: 22px;
-      background: var(--red);
-      border-radius: 5px;
+      width: 34px;
+      height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 0 12px var(--red-glow);
     }
 
-    .logo-icon svg { width: 14px; height: 14px; fill: white; }
+    .logo-icon svg { width: 34px; height: 24px; }
 
     .logo-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 2px;
+      font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
       color: var(--text);
       line-height: 1;
     }
 
-    .logo-text span { color: var(--red); }
+    .logo-text span { color: var(--text); }
 
     .header-notion-link {
       display: flex;
@@ -105,9 +105,10 @@
       padding: 6px 10px;
       border-radius: 6px;
       border: 1px solid var(--border);
+      background: var(--surface);
       transition: all 0.2s;
     }
-    .header-notion-link:hover { color: var(--text); border-color: var(--border-red); }
+    .header-notion-link:hover { color: var(--red); border-color: var(--border-red); }
     .header-notion-link svg { width: 14px; height: 14px; fill: currentColor; }
 
     /* ── MAIN ── */
@@ -122,7 +123,7 @@
       position: relative;
       width: 100%;
       aspect-ratio: 16/9;
-      background: var(--surface);
+      background: var(--surface2);
       border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--border);
@@ -143,8 +144,8 @@
       color: var(--text-dim);
     }
 
-    .preview-placeholder svg { width: 44px; height: 44px; fill: var(--text-dim); opacity: 0.5; }
-    .preview-placeholder span { font-size: 13px; font-weight: 300; }
+    .preview-placeholder svg { width: 44px; height: 44px; fill: #AAAAAA; }
+    .preview-placeholder span { font-size: 13px; font-weight: 400; color: #888888; }
 
     .preview-img {
       width: 100%;
@@ -186,10 +187,10 @@
 
     .section-label {
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--text-dim);
+      color: var(--text-muted);
       margin-bottom: 8px;
       padding-left: 2px;
     }
@@ -202,7 +203,7 @@
     input[type="url"] {
       width: 100%;
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius);
       padding: 13px 14px;
       font-size: 15px;
@@ -276,7 +277,7 @@
       left: 0;
       right: 0;
       background: var(--bg3);
-      border: 1px solid var(--border-red);
+      border: 1.5px solid var(--border-red);
       border-radius: var(--radius);
       z-index: 50;
       max-height: 240px;
@@ -332,48 +333,45 @@
     }
     @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
 
-    /* ── STAR RATING ── */
-    .star-group {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .star-btn {
+    /* ── VIDEO INFO ── */
+    .video-info {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 20px;
+      padding: 12px 14px;
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 9px 14px;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border-red);
+    }
+    .video-info.visible { display: flex; }
+    .video-info-title {
       font-size: 14px;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.15s;
-      font-family: 'Noto Sans KR', sans-serif;
-      flex: 1;
-      min-width: 0;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    .star-btn:hover { border-color: var(--border-red); color: var(--text); }
-
-    .star-btn.active {
-      background: rgba(204,0,0,0.15);
-      border-color: var(--red);
+      font-weight: 500;
       color: var(--text);
-      box-shadow: 0 0 8px rgba(204,0,0,0.2);
+      line-height: 1.4;
     }
-
-    .star-btn.scheduled {
-      background: var(--surface2);
-      border-color: var(--border);
-      color: var(--text-muted);
+    .video-info-channel {
       font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .star-btn.scheduled.active {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.3);
-      color: var(--text);
+    .video-info-channel::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .video-info-loading {
+      font-size: 13px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     /* ── CATEGORY TAGS ── */
@@ -384,12 +382,70 @@
       margin-bottom: 10px;
     }
 
+    /* ── CATEGORY SEARCH ── */
+    .cat-search-wrap {
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .cat-search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    .cat-search-input::placeholder { color: var(--text-dim); }
+    .cat-search-input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px var(--red-glow);
+    }
+    .cat-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: var(--bg3);
+      border: 1.5px solid var(--border-red);
+      border-radius: var(--radius);
+      z-index: 50;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .cat-dropdown.open { display: block; }
+    .cat-dropdown-item {
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+    }
+    .cat-dropdown-item:hover { background: var(--surface); }
+    .cat-dropdown-item.add-new { color: var(--red); }
+    .cat-dropdown-item .cat-dot {
+      width: 6px; height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+    .cat-dropdown-item.selected-item { opacity: 0.4; pointer-events: none; }
+
     .cat-chip {
       padding: 7px 13px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: 400;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       background: var(--surface);
       color: var(--text-muted);
       cursor: pointer;
@@ -397,35 +453,15 @@
       user-select: none;
       -webkit-user-select: none;
     }
-    .cat-chip:hover { border-color: var(--border-red); color: var(--text); }
+    .cat-chip:hover { border-color: var(--border-red); color: var(--red); }
     .cat-chip.active {
-      background: rgba(204,0,0,0.15);
+      background: rgba(204,0,0,0.08);
       border-color: var(--red);
-      color: #FF6666;
+      color: var(--red);
+      font-weight: 500;
     }
 
-    .cat-custom-wrap {
-      display: flex;
-      gap: 8px;
-    }
-    .cat-custom-wrap input {
-      flex: 1;
-      padding: 10px 12px;
-      font-size: 13px;
-    }
-    .cat-add-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 14px;
-      color: var(--text-muted);
-      font-size: 13px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.15s;
-      font-family: 'Noto Sans KR', sans-serif;
-    }
-    .cat-add-btn:hover { border-color: var(--border-red); color: var(--text); }
+
 
     /* selected tags */
     .selected-tags {
@@ -440,11 +476,12 @@
       align-items: center;
       gap: 5px;
       padding: 4px 10px 4px 12px;
-      background: rgba(204,0,0,0.15);
-      border: 1px solid var(--red);
+      background: rgba(204,0,0,0.08);
+      border: 1.5px solid var(--red);
       border-radius: 20px;
       font-size: 12px;
-      color: #FF8888;
+      color: var(--red);
+      font-weight: 500;
     }
     .tag-pill button {
       background: none;
@@ -462,7 +499,7 @@
     textarea {
       width: 100%;
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius);
       padding: 13px 14px;
       font-size: 14px;
@@ -493,7 +530,7 @@
       right: 0;
       padding: 12px 16px;
       padding-bottom: calc(12px + env(safe-area-inset-bottom));
-      background: rgba(10,10,10,0.95);
+      background: rgba(245,245,245,0.97);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-top: 1px solid var(--border);
@@ -530,8 +567,8 @@
       bottom: 90px;
       left: 50%;
       transform: translateX(-50%) translateY(20px);
-      background: var(--bg3);
-      border: 1px solid var(--border);
+      background: var(--surface);
+      border: 1.5px solid var(--border);
       border-radius: 24px;
       padding: 10px 20px;
       font-size: 14px;
@@ -565,7 +602,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 360px) {
-      .star-btn { padding: 8px 10px; font-size: 13px; }
+
     }
   </style>
 </head>
@@ -575,9 +612,12 @@
   <header>
     <div class="header-logo">
       <div class="logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-2.75 12.63 12.63 0 00-6.2 0A4.83 4.83 0 016.41 6.69 17.88 17.88 0 005 12a17.88 17.88 0 001.41 5.31 4.83 4.83 0 003.77 2.75 12.63 12.63 0 006.2 0 4.83 4.83 0 003.77-2.75A17.88 17.88 0 0021 12a17.88 17.88 0 00-1.41-5.31zM10 15.5v-7l6 3.5-6 3.5z"/></svg>
+        <svg viewBox="0 0 34 24" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="34" height="24" rx="6" fill="#FF0000"/>
+          <polygon points="14,7 14,17 23,12" fill="white"/>
+        </svg>
       </div>
-      <span class="logo-text">YT <span>ARCHIVE</span></span>
+      <span class="logo-text">Youtube 아카이브</span>
     </div>
     <a href="NOTION_DB_URL" target="_blank" class="header-notion-link" id="notionLink">
       <svg viewBox="0 0 24 24"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"/></svg>
@@ -590,7 +630,10 @@
     <!-- Thumbnail Preview -->
     <div class="preview-area" id="previewArea">
       <div class="preview-placeholder" id="previewPlaceholder">
-        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-2.75 12.63 12.63 0 00-6.2 0A4.83 4.83 0 016.41 6.69 17.88 17.88 0 005 12a17.88 17.88 0 001.41 5.31 4.83 4.83 0 003.77 2.75 12.63 12.63 0 006.2 0 4.83 4.83 0 003.77-2.75A17.88 17.88 0 0021 12a17.88 17.88 0 00-1.41-5.31zM10 15.5v-7l6 3.5-6 3.5z"/></svg>
+        <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" width="68" height="48">
+          <rect x="0" y="0" width="68" height="48" rx="12" fill="#CCCCCC"/>
+          <polygon points="28,14 28,34 46,24" fill="white"/>
+        </svg>
         <span>유튜브 링크를 입력하면 썸네일이 표시됩니다</span>
       </div>
       <img class="preview-img" id="previewImg" src="" alt="썸네일" />
@@ -609,62 +652,35 @@
       </div>
     </div>
 
-    <!-- Title -->
-    <div class="section">
-      <div class="section-label">영상 제목 *</div>
-      <input type="text" id="title" placeholder="영상 제목 입력" />
-    </div>
-
-    <!-- Youtuber / Channel -->
-    <div class="section">
-      <div class="section-label">채널 / 유튜버</div>
-      <div class="youtuber-wrap">
-        <button class="youtuber-select-btn" id="youtuberBtn" onclick="toggleYoutuberDropdown()">
-          <span id="youtuberLabel">채널 선택 또는 직접 입력</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
-        </button>
-        <div class="youtuber-dropdown" id="youtuberDropdown">
-          <div class="dropdown-search">
-            <input type="text" id="youtuberSearch" placeholder="채널 검색..." oninput="filterYoutubers(this.value)" />
-          </div>
-          <div class="dropdown-list" id="youtuberList">
-            <div class="dropdown-item" style="color:var(--text-dim)">
-              <span class="loading-dot"></span> 불러오는 중...
-            </div>
-          </div>
-        </div>
+    <!-- Video Info (auto-filled) -->
+    <div class="video-info" id="videoInfo">
+      <div class="video-info-loading" id="videoInfoLoading" style="display:none">
+        <span class="loading-dot"></span><span class="loading-dot" style="animation-delay:0.2s"></span><span class="loading-dot" style="animation-delay:0.4s"></span>
+        <span>정보 불러오는 중...</span>
       </div>
-    </div>
-
-    <!-- Star Rating -->
-    <div class="section">
-      <div class="section-label">별점</div>
-      <div class="star-group" id="starGroup">
-        <button class="star-btn scheduled active" data-val="예정" onclick="selectStar(this)">예정</button>
-        <button class="star-btn" data-val="⭐" onclick="selectStar(this)">⭐</button>
-        <button class="star-btn" data-val="⭐⭐" onclick="selectStar(this)">⭐⭐</button>
-        <button class="star-btn" data-val="⭐⭐⭐" onclick="selectStar(this)">⭐⭐⭐</button>
-        <button class="star-btn" data-val="⭐⭐⭐⭐" onclick="selectStar(this)">⭐⭐⭐⭐</button>
-        <button class="star-btn" data-val="⭐⭐⭐⭐⭐" onclick="selectStar(this)">⭐⭐⭐⭐⭐</button>
-      </div>
+      <div class="video-info-title" id="videoInfoTitle"></div>
+      <div class="video-info-channel" id="videoInfoChannel"></div>
     </div>
 
     <!-- Category -->
     <div class="section">
       <div class="section-label">카테고리</div>
+      <!-- 최근 사용 5개 칩 -->
       <div class="category-grid" id="catGrid">
-        <button class="cat-chip" data-cat="디자인/크리에이티브" onclick="toggleCat(this)">디자인/크리에이티브</button>
-        <button class="cat-chip" data-cat="경제/재테크" onclick="toggleCat(this)">경제/재테크</button>
-        <button class="cat-chip" data-cat="이슈/시사" onclick="toggleCat(this)">이슈/시사</button>
-        <button class="cat-chip" data-cat="테크/IT" onclick="toggleCat(this)">테크/IT</button>
-        <button class="cat-chip" data-cat="자기계발" onclick="toggleCat(this)">자기계발</button>
-        <button class="cat-chip" data-cat="엔터/예능" onclick="toggleCat(this)">엔터/예능</button>
-        <button class="cat-chip" data-cat="교육/강의" onclick="toggleCat(this)">교육/강의</button>
-        <button class="cat-chip" data-cat="여행/라이프" onclick="toggleCat(this)">여행/라이프</button>
+        <div style="color:var(--text-dim);font-size:13px;display:flex;align-items:center;gap:6px">
+          <span class="loading-dot"></span><span class="loading-dot" style="animation-delay:0.2s"></span><span class="loading-dot" style="animation-delay:0.4s"></span>
+          불러오는 중...
+        </div>
       </div>
-      <div class="cat-custom-wrap">
-        <input type="text" id="catCustom" placeholder="직접 입력 후 추가" onkeydown="if(event.key==='Enter'){addCustomCat();event.preventDefault();}" />
-        <button class="cat-add-btn" onclick="addCustomCat()">+ 추가</button>
+      <!-- 검색/추가 드롭다운 -->
+      <div class="cat-search-wrap">
+        <input class="cat-search-input" id="catSearch" placeholder="카테고리 검색 또는 직접 추가..."
+          autocomplete="off" autocorrect="off"
+          oninput="onCatSearch(this.value)"
+          onkeydown="onCatSearchKey(event)"
+          onfocus="openCatDropdown()"
+        />
+        <div class="cat-dropdown" id="catDropdown"></div>
       </div>
       <div class="selected-tags" id="selectedTags"></div>
     </div>
@@ -679,8 +695,7 @@
   <!-- SAVE BAR -->
   <div class="save-bar">
     <button class="save-btn" id="saveBtn" onclick="save()">
-      <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2zM17 21v-8H7v8M7 3v5h8"/></svg>
-      Notion에 저장
+노션에 저장하기
     </button>
   </div>
 
@@ -689,32 +704,29 @@
 
   <script>
     // ─── CONFIG ───────────────────────────────────────
-    // Cloudflare Workers URL을 여기에 입력하세요
-    const WORKER_URL = 'https://youtube-archive.wogns3885.workers.dev';
-    // Notion 아카이브 DB 페이지 URL
+    const WORKER_URL    = 'https://youtube-archive.wogns3885.workers.dev';
     const NOTION_DB_URL = 'https://www.notion.so/32f0fe84d333809abce2d12c6c14197f';
 
     // ─── STATE ────────────────────────────────────────
     let selectedYoutuber = '';
-    let selectedStar = '예정';
-    let selectedCats = new Set();
-    let youtubers = [];
-    let thumbUrl = '';
+    let autoTitle        = '';
+    let selectedCats     = new Set();
+    let thumbUrl         = '';
+    let allCategories    = [];
 
     // ─── INIT ─────────────────────────────────────────
     document.getElementById('notionLink').href = NOTION_DB_URL;
 
     document.addEventListener('DOMContentLoaded', () => {
-      loadYoutubers();
       document.getElementById('ytUrl').addEventListener('input', onUrlInput);
-      // 외부 클릭 시 드롭다운 닫기
+      loadCategories();
       document.addEventListener('click', (e) => {
-        const wrap = document.querySelector('.youtuber-wrap');
-        if (!wrap.contains(e.target)) closeYoutuberDropdown();
+        const wrap = document.querySelector('.cat-search-wrap');
+        if (wrap && !wrap.contains(e.target)) closeCatDropdown();
       });
     });
 
-    // ─── URL INPUT & THUMBNAIL ────────────────────────
+    // ─── URL / THUMBNAIL ──────────────────────────────
     let urlTimer = null;
     function onUrlInput(e) {
       const val = e.target.value.trim();
@@ -757,130 +769,90 @@
         img.src = thumbUrl;
       };
       img.src = thumbUrl;
-
-      // 제목 자동완성
       fetchTitle(url);
     }
 
     async function fetchTitle(url) {
-      const titleInput = document.getElementById('title');
-      // 이미 직접 입력한 내용이 있으면 덮어쓰지 않음
-      if (titleInput.value.trim()) return;
+      const infoBox  = document.getElementById('videoInfo');
+      const loading  = document.getElementById('videoInfoLoading');
+      const titleEl  = document.getElementById('videoInfoTitle');
+      const channelEl= document.getElementById('videoInfoChannel');
 
-      titleInput.placeholder = '제목 불러오는 중...';
+      infoBox.classList.add('visible');
+      loading.style.display = 'flex';
+      titleEl.textContent   = '';
+      channelEl.textContent = '';
+      autoTitle        = '';
+      selectedYoutuber = '';
+
       try {
-        const res = await fetch(`${WORKER_URL}/title?url=${encodeURIComponent(url)}`);
+        const res  = await fetch(`${WORKER_URL}/title?url=${encodeURIComponent(url)}`);
         if (!res.ok) throw new Error();
         const data = await res.json();
-        if (data.title && !titleInput.value.trim()) {
-          titleInput.value = data.title;
-          // 채널명도 비어있으면 자동완성
-          if (data.author_name && !selectedYoutuber) {
-            const directInput = document.getElementById('youtuberDirect');
-            if (directInput) {
-              directInput.value = data.author_name;
-              selectedYoutuber = data.author_name;
-            } else if (!document.getElementById('youtuberBtn').classList.contains('selected')) {
-              document.getElementById('youtuberLabel').textContent = data.author_name;
-              document.getElementById('youtuberBtn').classList.add('selected');
-              selectedYoutuber = data.author_name;
-            }
-          }
-        }
+        autoTitle        = data.title       || '';
+        selectedYoutuber = data.author_name || '';
+        titleEl.textContent   = autoTitle;
+        channelEl.textContent = selectedYoutuber;
       } catch {
-        // 실패해도 조용히 무시
+        titleEl.textContent = '정보를 불러올 수 없습니다';
       } finally {
-        titleInput.placeholder = '영상 제목 입력';
+        loading.style.display = 'none';
       }
     }
 
     function clearThumb() {
-      thumbUrl = '';
+      thumbUrl = ''; autoTitle = ''; selectedYoutuber = '';
       const img = document.getElementById('previewImg');
       img.classList.remove('visible');
       img.src = '';
       document.getElementById('previewPlaceholder').style.display = '';
       document.getElementById('previewArea').classList.remove('has-thumb');
-    }
-
-    // ─── YOUTUBERS ────────────────────────────────────
-    async function loadYoutubers() {
-      try {
-        const res = await fetch(`${WORKER_URL}/youtubers`);
-        const data = await res.json();
-        youtubers = data.youtubers || [];
-        renderYoutuberList(youtubers);
-      } catch {
-        document.getElementById('youtuberList').innerHTML =
-          '<div class="dropdown-item" style="color:var(--text-dim);font-size:13px">불러오기 실패</div>';
-      }
-    }
-
-    function renderYoutuberList(list) {
-      const el = document.getElementById('youtuberList');
-      const searchVal = document.getElementById('youtuberSearch').value;
-      let html = '<div class="dropdown-item direct-input" onclick="selectDirectInput()">✏️ 직접 입력</div>';
-      if (list.length === 0 && !searchVal) {
-        html += '<div class="dropdown-item" style="color:var(--text-dim);font-size:13px">등록된 채널 없음</div>';
-      } else {
-        list.forEach(y => {
-          html += `<div class="dropdown-item" onclick="selectYoutuber('${y.replace(/'/g,"\\'")}')">
-            <span class="channel-dot"></span>${y}
-          </div>`;
-        });
-        if (searchVal && !list.includes(searchVal)) {
-          html += `<div class="dropdown-item direct-input" onclick="selectYoutuber('${searchVal.replace(/'/g,"\\'")}')">
-            + "${searchVal}" 추가
-          </div>`;
-        }
-      }
-      el.innerHTML = html;
-    }
-
-    function filterYoutubers(q) {
-      const filtered = q ? youtubers.filter(y => y.includes(q)) : youtubers;
-      renderYoutuberList(filtered);
-    }
-
-    function toggleYoutuberDropdown() {
-      const dd = document.getElementById('youtuberDropdown');
-      dd.classList.toggle('open');
-      if (dd.classList.contains('open')) {
-        setTimeout(() => document.getElementById('youtuberSearch').focus(), 50);
-      }
-    }
-
-    function closeYoutuberDropdown() {
-      document.getElementById('youtuberDropdown').classList.remove('open');
-    }
-
-    function selectYoutuber(name) {
-      selectedYoutuber = name;
-      const btn = document.getElementById('youtuberBtn');
-      document.getElementById('youtuberLabel').textContent = name;
-      btn.classList.add('selected');
-      closeYoutuberDropdown();
-    }
-
-    function selectDirectInput() {
-      const val = document.getElementById('youtuberSearch').value.trim();
-      if (val) { selectYoutuber(val); return; }
-      closeYoutuberDropdown();
-      const btn = document.getElementById('youtuberBtn');
-      document.getElementById('youtuberLabel').textContent = '직접 입력...';
-      // 드롭다운 대신 인라인 input으로 전환
-      const wrap = document.querySelector('.youtuber-wrap');
-      wrap.innerHTML = `<input type="text" id="youtuberDirect" placeholder="채널명 직접 입력" style="width:100%;background:var(--surface);border:1px solid var(--red);border-radius:var(--radius);padding:13px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;color:var(--text);outline:none;" oninput="selectedYoutuber=this.value" />`;
-    }
-
-    // ─── STAR ─────────────────────────────────────────
-    function selectStar(el) {
-      document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
-      el.classList.add('active');
-      selectedStar = el.dataset.val;
+      const infoBox = document.getElementById('videoInfo');
+      infoBox.classList.remove('visible');
+      document.getElementById('videoInfoTitle').textContent   = '';
+      document.getElementById('videoInfoChannel').textContent = '';
     }
 
     // ─── CATEGORY ─────────────────────────────────────
+    function getRecentCats() {
+      try { return JSON.parse(localStorage.getItem('recentCats') || '[]'); }
+      catch { return []; }
+    }
+    function saveRecentCats(cats) {
+      localStorage.setItem('recentCats', JSON.stringify(cats));
+    }
+    function addToRecentCats(cat) {
+      let recent = getRecentCats().filter(c => c !== cat);
+      recent.unshift(cat);
+      saveRecentCats(recent.slice(0, 10));
+    }
+
+    async function loadCategories() {
+      try {
+        const res  = await fetch(`${WORKER_URL}/categories`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        allCategories = data.categories || [];
+        renderCategoryChips();
+      } catch {
+        document.getElementById('catGrid').innerHTML =
+          '<div style="color:var(--text-dim);font-size:13px">카테고리 불러오기 실패</div>';
+      }
+    }
+
+    function renderCategoryChips() {
+      const grid = document.getElementById('catGrid');
+      if (allCategories.length === 0) {
+        grid.innerHTML = '<div style="color:var(--text-dim);font-size:13px">카테고리를 검색해서 추가하세요</div>';
+        return;
+      }
+      const recent  = getRecentCats().filter(c => allCategories.includes(c)).slice(0, 5);
+      const toShow  = recent.length > 0 ? recent : allCategories.slice(0, 5);
+      grid.innerHTML = toShow.map(cat =>
+        `<button class="cat-chip${selectedCats.has(cat) ? ' active' : ''}" data-cat="${cat}" onclick="toggleCat(this)">${cat}</button>`
+      ).join('');
+    }
+
     function toggleCat(el) {
       const cat = el.dataset.cat;
       if (selectedCats.has(cat)) {
@@ -890,100 +862,150 @@
         selectedCats.add(cat);
         el.classList.add('active');
       }
-      renderSelectedTags();
+      renderSelectedTags(); // chip에 없는 선택항목만 pill로 표시
     }
 
-    function addCustomCat() {
-      const input = document.getElementById('catCustom');
-      const val = input.value.trim();
-      if (!val || selectedCats.has(val)) { input.value = ''; return; }
-      selectedCats.add(val);
-      input.value = '';
-      renderSelectedTags();
+    // ─── CATEGORY SEARCH DROPDOWN ─────────────────────
+    function onCatSearch(q) {
+      openCatDropdown();
+      renderCatDropdown(q);
+    }
+
+    function onCatSearchKey(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const q = document.getElementById('catSearch').value.trim();
+        if (!q) return;
+        const first = document.querySelector('.cat-dropdown-item:not(.selected-item)');
+        if (first) first.click();
+      }
+      if (e.key === 'Escape') closeCatDropdown();
+    }
+
+    function openCatDropdown() {
+      renderCatDropdown(document.getElementById('catSearch').value);
+      document.getElementById('catDropdown').classList.add('open');
+    }
+
+    function closeCatDropdown() {
+      document.getElementById('catDropdown').classList.remove('open');
+      document.getElementById('catSearch').value = '';
+    }
+
+    function renderCatDropdown(q) {
+      const dd       = document.getElementById('catDropdown');
+      const filtered = q
+        ? allCategories.filter(c => c.toLowerCase().includes(q.toLowerCase()))
+        : allCategories;
+
+      let html = '';
+      filtered.forEach(cat => {
+        const isSel = selectedCats.has(cat) ? ' selected-item' : '';
+        html += `<div class="cat-dropdown-item${isSel}" onclick="selectCatFromDropdown('${cat.replace(/'/g,"\'")}')">
+          <span class="cat-dot"></span>${cat}${isSel ? ' ✓' : ''}
+        </div>`;
+      });
+
+      if (q && !allCategories.includes(q)) {
+        html += `<div class="cat-dropdown-item add-new" onclick="selectCatFromDropdown('${q.replace(/'/g,"\'")}')">
+          + "${q}" 추가
+        </div>`;
+      }
+
+      if (!html) {
+        html = '<div style="padding:10px 14px;font-size:13px;color:var(--text-dim)">검색 결과 없음</div>';
+      }
+      dd.innerHTML = html;
+    }
+
+    function selectCatFromDropdown(cat) {
+      if (!selectedCats.has(cat)) {
+        selectedCats.add(cat);
+        addToRecentCats(cat);
+        renderCategoryChips();
+        renderSelectedTags();
+      }
+      closeCatDropdown();
     }
 
     function removeTag(cat) {
       selectedCats.delete(cat);
-      // 프리셋 버튼 해제
+      // 칩에 있는 항목이면 칩 active 해제
       document.querySelectorAll('.cat-chip').forEach(b => {
         if (b.dataset.cat === cat) b.classList.remove('active');
       });
       renderSelectedTags();
     }
 
+    // 현재 보이는 칩 목록 가져오기
+    function getChipCats() {
+      return [...document.querySelectorAll('.cat-chip')].map(b => b.dataset.cat);
+    }
+
     function renderSelectedTags() {
       const wrap = document.getElementById('selectedTags');
+      const chipCats = getChipCats();
       wrap.innerHTML = '';
+      // 칩에 없는 선택 항목만 pill로 표시
       selectedCats.forEach(cat => {
+        if (chipCats.includes(cat)) return; // 칩에 있으면 pill 생략
         const pill = document.createElement('div');
         pill.className = 'tag-pill';
-        pill.innerHTML = `${cat}<button onclick="removeTag('${cat.replace(/'/g,"\\'")}')">✕</button>`;
+        pill.innerHTML = `${cat}<button onclick="removeTag('${cat.replace(/'/g,"\'")}')">✕</button>`;
         wrap.appendChild(pill);
       });
     }
 
     // ─── SAVE ─────────────────────────────────────────
     async function save() {
-      const url = document.getElementById('ytUrl').value.trim();
-      const title = document.getElementById('title').value.trim();
+      const url  = document.getElementById('ytUrl').value.trim();
       const memo = document.getElementById('memo').value.trim();
 
-      if (!url) { showToast('유튜브 링크를 입력해주세요', 'error'); return; }
-      if (!title) { showToast('영상 제목을 입력해주세요', 'error'); return; }
+      if (!url)       { showToast('유튜브 링크를 입력해주세요', 'error'); return; }
+      if (!autoTitle) { showToast('영상 정보를 불러오는 중입니다', 'error'); return; }
 
       const btn = document.getElementById('saveBtn');
       btn.disabled = true;
       btn.innerHTML = '<div class="spinner"></div> 저장 중...';
 
-      const youtuberVal = selectedYoutuber ||
-        (document.getElementById('youtuberDirect') ? document.getElementById('youtuberDirect').value.trim() : '');
-
       const payload = {
-        title,
+        title:      autoTitle,
         url,
-        youtuber: youtuberVal,
-        star: selectedStar,
+        youtuber:   selectedYoutuber,
         categories: [...selectedCats],
         memo,
-        thumbnail: thumbUrl
+        thumbnail:  thumbUrl
       };
 
       try {
         const res = await fetch(`${WORKER_URL}/save`, {
-          method: 'POST',
+          method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body:    JSON.stringify(payload)
         });
-
         if (!res.ok) throw new Error(await res.text());
 
+        [...selectedCats].forEach(c => addToRecentCats(c));
         showToast('저장 완료! Notion에 추가되었습니다 ✓', 'success');
         resetForm();
-        loadYoutubers(); // 새 채널 추가 시 목록 새로고침
       } catch (err) {
         console.error(err);
         showToast('저장 실패: ' + (err.message || '서버 오류'), 'error');
       } finally {
         btn.disabled = false;
-        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2zM17 21v-8H7v8M7 3v5h8"/></svg> Notion에 저장`;
+        btn.innerHTML = '노션에 저장하기';
       }
     }
 
     function resetForm() {
-      document.getElementById('ytUrl').value = '';
-      document.getElementById('title').value = '';
-      document.getElementById('memo').value = '';
+      document.getElementById('ytUrl').value  = '';
+      document.getElementById('memo').value   = '';
       document.getElementById('urlClear').classList.remove('visible');
       clearThumb();
-      selectedYoutuber = '';
-      selectedStar = '예정';
       selectedCats.clear();
-      document.getElementById('youtuberLabel').textContent = '채널 선택 또는 직접 입력';
-      document.getElementById('youtuberBtn') && document.getElementById('youtuberBtn').classList.remove('selected');
-      document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector('.star-btn.scheduled').classList.add('active');
       document.querySelectorAll('.cat-chip').forEach(b => b.classList.remove('active'));
       document.getElementById('selectedTags').innerHTML = '';
+      closeCatDropdown();
     }
 
     // ─── TOAST ────────────────────────────────────────
