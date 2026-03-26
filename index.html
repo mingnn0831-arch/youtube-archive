@@ -753,11 +753,45 @@
         document.getElementById('previewArea').classList.add('has-thumb');
       };
       img.onerror = () => {
-        // fallback to hqdefault
         thumbUrl = `https://img.youtube.com/vi/${vid}/hqdefault.jpg`;
         img.src = thumbUrl;
       };
       img.src = thumbUrl;
+
+      // 제목 자동완성
+      fetchTitle(url);
+    }
+
+    async function fetchTitle(url) {
+      const titleInput = document.getElementById('title');
+      // 이미 직접 입력한 내용이 있으면 덮어쓰지 않음
+      if (titleInput.value.trim()) return;
+
+      titleInput.placeholder = '제목 불러오는 중...';
+      try {
+        const res = await fetch(`${WORKER_URL}/title?url=${encodeURIComponent(url)}`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        if (data.title && !titleInput.value.trim()) {
+          titleInput.value = data.title;
+          // 채널명도 비어있으면 자동완성
+          if (data.author_name && !selectedYoutuber) {
+            const directInput = document.getElementById('youtuberDirect');
+            if (directInput) {
+              directInput.value = data.author_name;
+              selectedYoutuber = data.author_name;
+            } else if (!document.getElementById('youtuberBtn').classList.contains('selected')) {
+              document.getElementById('youtuberLabel').textContent = data.author_name;
+              document.getElementById('youtuberBtn').classList.add('selected');
+              selectedYoutuber = data.author_name;
+            }
+          }
+        }
+      } catch {
+        // 실패해도 조용히 무시
+      } finally {
+        titleInput.placeholder = '영상 제목 입력';
+      }
     }
 
     function clearThumb() {
