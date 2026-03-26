@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>유튜브 아카이브</title>
   <meta name="description" content="유튜브 영상을 Notion에 빠르게 아카이빙" />
   <meta name="theme-color" content="#CC0000" />
@@ -47,6 +47,8 @@
       min-height: -webkit-fill-available;
       padding-bottom: env(safe-area-inset-bottom);
       overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
     }
 
     /* ── HEADER ── */
@@ -108,7 +110,7 @@
       background: var(--surface);
       transition: all 0.2s;
     }
-    .header-notion-link:hover { color: var(--red); border-color: var(--border-red); }
+    @media (hover: hover) { .header-notion-link:hover { color: var(--red); border-color: var(--border-red); } }
     .header-notion-link svg { width: 14px; height: 14px; fill: currentColor; }
 
     /* ── MAIN ── */
@@ -453,7 +455,7 @@
       user-select: none;
       -webkit-user-select: none;
     }
-    .cat-chip:hover { border-color: var(--border-red); color: var(--red); }
+    @media (hover: hover) { .cat-chip:hover { border-color: var(--border-red); color: var(--red); } }
     .cat-chip.active {
       background: rgba(204,0,0,0.08);
       border-color: var(--red);
@@ -556,7 +558,7 @@
       letter-spacing: 0.02em;
       box-shadow: 0 4px 20px rgba(204,0,0,0.4);
     }
-    .save-btn:hover { background: var(--red-bright); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(204,0,0,0.5); }
+    @media (hover: hover) { .save-btn:hover { background: var(--red-bright); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(204,0,0,0.5); } }
     .save-btn:active { transform: translateY(0); }
     .save-btn:disabled { background: var(--surface2); color: var(--text-dim); box-shadow: none; cursor: not-allowed; transform: none; }
     .save-btn svg { width: 18px; height: 18px; fill: currentColor; }
@@ -804,7 +806,7 @@
       thumbUrl = ''; autoTitle = ''; selectedYoutuber = '';
       const img = document.getElementById('previewImg');
       img.classList.remove('visible');
-      img.src = '';
+      img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
       document.getElementById('previewPlaceholder').style.display = '';
       document.getElementById('previewArea').classList.remove('has-thumb');
       const infoBox = document.getElementById('videoInfo');
