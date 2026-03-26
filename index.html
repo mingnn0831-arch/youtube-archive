@@ -11,6 +11,8 @@
   <meta name="apple-mobile-web-app-title" content="YT Archive" />
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -759,17 +761,14 @@
     function loadThumb(url) {
       const vid = extractVideoId(url);
       if (!vid) { clearThumb(); return; }
-      thumbUrl = `https://img.youtube.com/vi/${vid}/maxresdefault.jpg`;
+      thumbUrl = `https://img.youtube.com/vi/${vid}/hqdefault.jpg`;
       const img = document.getElementById('previewImg');
       img.onload = () => {
         img.classList.add('visible');
         document.getElementById('previewPlaceholder').style.display = 'none';
         document.getElementById('previewArea').classList.add('has-thumb');
       };
-      img.onerror = () => {
-        thumbUrl = `https://img.youtube.com/vi/${vid}/hqdefault.jpg`;
-        img.src = thumbUrl;
-      };
+      img.onerror = () => { clearThumb(); };
       img.src = thumbUrl;
       fetchTitle(url);
     }
@@ -805,9 +804,11 @@
     function clearThumb() {
       thumbUrl = ''; autoTitle = ''; selectedYoutuber = '';
       const img = document.getElementById('previewImg');
+      img.onload = null;  // 투명픽셀 로드 시 visible 재부착 방지
+      img.onerror = null;
       img.classList.remove('visible');
       img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-      document.getElementById('previewPlaceholder').style.display = '';
+      document.getElementById('previewPlaceholder').style.display = 'flex';
       document.getElementById('previewArea').classList.remove('has-thumb');
       const infoBox = document.getElementById('videoInfo');
       infoBox.classList.remove('visible');
@@ -1000,6 +1001,7 @@
     }
 
     function resetForm() {
+      clearTimeout(urlTimer);
       document.getElementById('ytUrl').value  = '';
       document.getElementById('memo').value   = '';
       document.getElementById('urlClear').classList.remove('visible');
@@ -1008,6 +1010,7 @@
       document.querySelectorAll('.cat-chip').forEach(b => b.classList.remove('active'));
       document.getElementById('selectedTags').innerHTML = '';
       closeCatDropdown();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // ─── TOAST ────────────────────────────────────────
